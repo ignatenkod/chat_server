@@ -21,6 +21,7 @@ class ChatServer:
         
         try:
             async for message in websocket:
+                message = await logging_middleware(websocket, message)
                 await self.room_manager.handle_message(websocket, message)
         except Exception as e:
             logger.error(f"Ошибка: {e}")
